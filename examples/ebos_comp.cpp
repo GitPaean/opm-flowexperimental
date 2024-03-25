@@ -18,9 +18,9 @@
 */
 #include "config.h"
 #include <opm/models/utils/start.hh>
-#include <opm/simulators/flow/FlowProblem.hpp>
+#include <opm/simulators/flow/FlowProblemComp.hpp>
 #include "eclnewtonmethod.hh"
-#include "ebos.hh"
+#include "ebosComp.hh"
 #include <opm/simulators/flow/Main.hpp>
 #include <opm/models/blackoil/blackoillocalresidualtpfa.hh>
 #include <opm/models/discretization/common/tpfalinearizer.hh>
@@ -38,13 +38,13 @@
 // suggestTimeStep is taken from newton solver in problem.limitTimestep
 namespace Opm{
     template<typename TypeTag>
-    class EbosProblemFlow: public EbosProblem<TypeTag>{
+    class EbosProblemFlow: public EbosProblemComp<TypeTag>{
     public:
-        using Parent = EbosProblem<TypeTag>;
+        using Parent = EbosProblemComp<TypeTag>;
         using Simulator = GetPropType<TypeTag, Properties::Simulator>;
         //using TimeStepper =  AdaptiveTimeSteppingEbos<TypeTag>;
         using Scalar = GetPropType<TypeTag, Properties::Scalar>;
-        EbosProblemFlow(Simulator& simulator): EbosProblem<TypeTag>(simulator){
+        EbosProblemFlow(Simulator& simulator): EbosProblemComp<TypeTag>(simulator){
         }
         void timeIntegration()
         {
@@ -386,7 +386,7 @@ template <class TypeTag>
 struct Problem<TypeTag, TTag::CO2PTEcfvProblem>
 {
     //using type = Opm::CO2PTProblem<TypeTag>;
-    using type = EbosProblem<TypeTag>;
+    using type = EbosProblemComp<TypeTag>;
 };
 
 template<class TypeTag>
