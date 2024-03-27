@@ -29,7 +29,7 @@
 #define EBOSCOMP_HH
 
 #include <opm/simulators/flow/FlowProblemComp.hpp>
-#include <opm/simulators/flow/FlowProblemProperties.hpp>
+#include <opm/simulators/flow/FlowProblemCompProperties.hpp>
 
 #include <opm/models/utils/start.hh>
 #include <opm/models/discretization/common/fvbaseproblem.hh>
@@ -48,7 +48,7 @@ namespace Opm::Properties {
 
 namespace TTag {
 struct EbosTypeTag {
-    using InheritsFrom = std::tuple<FlowModelParameters, FlowBaseProblem, BlackOilModel, EclTimeSteppingParameters>;
+    using InheritsFrom = std::tuple<FlowModelParameters, FlowBaseProblemComp, BlackOilModel, EclTimeSteppingParameters>;
 };
 }
 

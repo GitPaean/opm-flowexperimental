@@ -21,7 +21,7 @@
 #include <opm/simulators/flow/FlowProblemComp.hpp>
 #include "eclnewtonmethod.hh"
 #include "ebosComp.hh"
-#include <opm/simulators/flow/Main.hpp>
+// #include <opm/simulators/flow/Main.hpp>
 #include <opm/models/blackoil/blackoillocalresidualtpfa.hh>
 #include <opm/models/discretization/common/tpfalinearizer.hh>
 #include <opm/flowexperimental/blackoilintensivequantitiessimple.hh>
