@@ -470,8 +470,8 @@ struct ExpliciteRockCompaction<TypeTag, TTag::CO2PTEcfvProblem> { static constex
 
 template<class TypeTag>
 struct EnableEclOutput<TypeTag, TTag::CO2PTEcfvProblem> { static constexpr bool value = false; };
-template<class TypeTag>
-struct EnableTerminalOutput<TypeTag, TTag::CO2PTEcfvProblem> { static constexpr bool value = false; };
+// template<class TypeTag>
+// struct EnableTerminalOutput<TypeTag, TTag::CO2PTEcfvProblem> { static constexpr bool value = false; };
 
 
 

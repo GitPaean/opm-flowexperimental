@@ -37,7 +37,7 @@
 #include <opm/simulators/aquifers/BlackoilAquiferModel.hpp>
 #include <opm/simulators/linalg/ISTLSolver.hpp>
 #include <opm/simulators/timestepping/EclTimeSteppingParams.hpp>
-#include <opm/simulators/wells/BlackoilWellModel.hpp>
+// #include <opm/simulators/wells/BlackoilWellModel.hpp>
 
 namespace Opm {
 template <class TypeTag>
@@ -67,10 +67,10 @@ struct EnableExperiments<TypeTag, TTag::EbosTypeTag> {
 };
 
 // use flow's well model for now
-template<class TypeTag>
+/* template<class TypeTag>
 struct WellModel<TypeTag, TTag::EbosTypeTag> {
     using type = BlackoilWellModel<TypeTag>;
-};
+}; */
 
 // currently, ebos uses the non-multisegment well model by default to avoid
 // regressions. the --use-multisegment-well=true|false command line parameter is still
@@ -86,10 +86,10 @@ struct MatrixAddWellContributions<TypeTag, TTag::EbosTypeTag> {
     static constexpr bool value = true;
 };
 
-template<class TypeTag>
+/* template<class TypeTag>
 struct EnableTerminalOutput<TypeTag, TTag::EbosTypeTag> {
     static constexpr bool value = false;
-};
+}; */
 
 // flow's well model only works with surface volumes
 template<class TypeTag>
@@ -210,7 +210,7 @@ public:
         ParentType::registerParameters();
 
         BlackoilModelParameters<TypeTag>::registerParameters();
-        EWOMS_REGISTER_PARAM(TypeTag, bool, EnableTerminalOutput, "Do *NOT* use!");
+//        EWOMS_REGISTER_PARAM(TypeTag, bool, EnableTerminalOutput, "Do *NOT* use!");
         EWOMS_HIDE_PARAM(TypeTag, DbhpMaxRel);
         EWOMS_HIDE_PARAM(TypeTag, DwellFractionMax);
         EWOMS_HIDE_PARAM(TypeTag, MaxResidualAllowed);
@@ -234,7 +234,7 @@ public:
         EWOMS_HIDE_PARAM(TypeTag, UpdateEquationsScaling);
         EWOMS_HIDE_PARAM(TypeTag, UseUpdateStabilization);
         EWOMS_HIDE_PARAM(TypeTag, MatrixAddWellContributions);
-        EWOMS_HIDE_PARAM(TypeTag, EnableTerminalOutput);
+//        EWOMS_HIDE_PARAM(TypeTag, EnableTerminalOutput);
     }
 
     // inherit the constructors
