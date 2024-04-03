@@ -20,7 +20,7 @@
 #include <ebos/eclproblem.hh>
 #include <ebos/eclnewtonmethod.hh>
 #include <ebos/ebos.hh>
-#include <opm/simulators/flow/Main.hpp>
+// #include <opm/simulators/flow/Main.hpp>
 
 #include <opm/models/blackoil/blackoillocalresidualtpfa.hh>
 #include <opm/models/discretization/common/tpfalinearizer.hh>
