@@ -257,10 +257,8 @@ namespace Opm::Properties {
 
    namespace TTag {
    struct CO2PTEcfvProblem {
-        //using InheritsFrom = std::tuple<CO2PTBaseProblem, FlashModel>;
-       //missing OutPutBlackOil
-       using InheritsFrom = std::tuple<FlashModel, FlowModelParameters, VtkTracer, CpGridVanguard, EclTimeSteppingParameters>;
-       //using InheritsFrom = std::tuple<VtkTracer, OutputBlackOil, CpGridVanguard>;
+       using InheritsFrom = std::tuple<FlashModel, FlowModelParameters, VtkTracer, CpGridVanguard,
+                                       EclTimeSteppingParameters, FlowBaseProblemComp>;
    };
    }
     template<class TypeTag, class MyTypeTag>
@@ -477,6 +475,17 @@ struct EnableEclOutput<TypeTag, TTag::CO2PTEcfvProblem> { static constexpr bool 
 
 template<class TypeTag>
 struct EnableDisgasInWater<TypeTag, TTag::CO2PTEcfvProblem> { static constexpr bool value = false; };
+
+template<class TypeTag>
+struct Stencil<TypeTag, TTag::CO2PTEcfvProblem>
+{
+private:
+    using Scalar = GetPropType<TypeTag, Properties::Scalar>;
+    using GridView = GetPropType<TypeTag, Properties::GridView>;
+
+public:
+    using type = EcfvStencil<Scalar, GridView>;
+};
 
 
 template<class TypeTag>
