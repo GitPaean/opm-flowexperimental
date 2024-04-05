@@ -210,31 +210,31 @@ public:
         ParentType::registerParameters();
 
         BlackoilModelParameters<TypeTag>::registerParameters();
-//        EWOMS_REGISTER_PARAM(TypeTag, bool, EnableTerminalOutput, "Do *NOT* use!");
-        EWOMS_HIDE_PARAM(TypeTag, DbhpMaxRel);
-        EWOMS_HIDE_PARAM(TypeTag, DwellFractionMax);
-        EWOMS_HIDE_PARAM(TypeTag, MaxResidualAllowed);
-        EWOMS_HIDE_PARAM(TypeTag, ToleranceMb);
-        EWOMS_HIDE_PARAM(TypeTag, ToleranceMbRelaxed);
-        EWOMS_HIDE_PARAM(TypeTag, ToleranceCnv);
-        EWOMS_HIDE_PARAM(TypeTag, ToleranceCnvRelaxed);
-        EWOMS_HIDE_PARAM(TypeTag, ToleranceWells);
-        EWOMS_HIDE_PARAM(TypeTag, ToleranceWellControl);
-        EWOMS_HIDE_PARAM(TypeTag, MaxWelleqIter);
-        EWOMS_HIDE_PARAM(TypeTag, UseMultisegmentWell);
-        EWOMS_HIDE_PARAM(TypeTag, TolerancePressureMsWells);
-        EWOMS_HIDE_PARAM(TypeTag, MaxPressureChangeMsWells);
-        EWOMS_HIDE_PARAM(TypeTag, MaxInnerIterMsWells);
-        EWOMS_HIDE_PARAM(TypeTag, MaxNewtonIterationsWithInnerWellIterations);
-        EWOMS_HIDE_PARAM(TypeTag, MaxInnerIterWells);
-        EWOMS_HIDE_PARAM(TypeTag, MaxSinglePrecisionDays);
-        EWOMS_HIDE_PARAM(TypeTag, MinStrictCnvIter);
-        EWOMS_HIDE_PARAM(TypeTag, MinStrictMbIter);
-        EWOMS_HIDE_PARAM(TypeTag, SolveWelleqInitially);
-        EWOMS_HIDE_PARAM(TypeTag, UpdateEquationsScaling);
-        EWOMS_HIDE_PARAM(TypeTag, UseUpdateStabilization);
-        EWOMS_HIDE_PARAM(TypeTag, MatrixAddWellContributions);
-//        EWOMS_HIDE_PARAM(TypeTag, EnableTerminalOutput);
+        // EWOMS_REGISTER_PARAM(TypeTag, bool, EnableTerminalOutput, "Do *NOT* use!");
+        Parameters::hideParam<TypeTag>("DbhpMaxRel");
+        Parameters::hideParam<TypeTag>("DwellFractionMax");
+        Parameters::hideParam<TypeTag>("MaxResidualAllowed");
+        Parameters::hideParam<TypeTag>("ToleranceMb");
+        Parameters::hideParam<TypeTag>("ToleranceMbRelaxed");
+        Parameters::hideParam<TypeTag>("ToleranceCnv");
+        Parameters::hideParam<TypeTag>("ToleranceCnvRelaxed");
+        Parameters::hideParam<TypeTag>("ToleranceWells");
+        Parameters::hideParam<TypeTag>("ToleranceWellControl");
+        Parameters::hideParam<TypeTag>("MaxWelleqIter");
+        Parameters::hideParam<TypeTag>("UseMultisegmentWell");
+        Parameters::hideParam<TypeTag>("TolerancePressureMsWells");
+        Parameters::hideParam<TypeTag>("MaxPressureChangeMsWells");
+        Parameters::hideParam<TypeTag>("MaxInnerIterMsWells");
+        Parameters::hideParam<TypeTag>("MaxNewtonIterationsWithInnerWellIterations");
+        Parameters::hideParam<TypeTag>("MaxInnerIterWells");
+        Parameters::hideParam<TypeTag>("MaxSinglePrecisionDays");
+        Parameters::hideParam<TypeTag>("MinStrictCnvIter");
+        Parameters::hideParam<TypeTag>("MinStrictMbIter");
+        Parameters::hideParam<TypeTag>("SolveWelleqInitially");
+        Parameters::hideParam<TypeTag>("UpdateEquationsScaling");
+        Parameters::hideParam<TypeTag>("UseUpdateStabilization");
+        Parameters::hideParam<TypeTag>("MatrixAddWellContributions");
+        // Parameters::hideParam<TypeTag>("EnableTerminalOutput");
     }
 
     // inherit the constructors

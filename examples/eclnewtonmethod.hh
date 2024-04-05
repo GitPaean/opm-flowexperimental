@@ -110,24 +110,21 @@ public:
     {
         ParentType::registerParameters();
 
-        EWOMS_REGISTER_PARAM(TypeTag, Scalar, EclNewtonSumTolerance,
-                             "The maximum error tolerated by the Newton"
-                             "method for considering a solution to be "
-                             "converged");
-        EWOMS_REGISTER_PARAM(TypeTag, int, EclNewtonStrictIterations,
-                             "The number of Newton iterations where the"
-                             " volumetric error is considered.");
-        EWOMS_REGISTER_PARAM(TypeTag, Scalar, EclNewtonRelaxedVolumeFraction,
-                             "The fraction of the pore volume of the reservoir "
-                             "where the volumetric error may be voilated during "
-                             "strict Newton iterations.");
-        EWOMS_REGISTER_PARAM(TypeTag, Scalar, EclNewtonSumToleranceExponent,
-                             "The the exponent used to scale the sum tolerance by "
-                             "the total pore volume of the reservoir.");
-        EWOMS_REGISTER_PARAM(TypeTag, Scalar, EclNewtonRelaxedTolerance,
-                             "The maximum error which the volumetric residual "
-                             "may exhibit if it is in a 'relaxed' "
-                             "region during a strict iteration.");
+        Parameters::registerParam<TypeTag, Properties::EclNewtonSumTolerance>
+                ("The maximum error tolerated by the Newton "
+                 "method for considering a solution to be converged");
+        Parameters::registerParam<TypeTag, Properties::EclNewtonStrictIterations>
+                 ("The number of Newton iterations where the "
+                  "volumetric error is considered.");
+        Parameters::registerParam<TypeTag, Properties::EclNewtonRelaxedVolumeFraction>
+                  ("The fraction of the pore volume of the reservoir "
+                   "where the volumetric error may be violated during strict Newton iterations.");
+        Parameters::registerParam<TypeTag, Properties::EclNewtonSumToleranceExponent>
+                  ("The the exponent used to scale the sum tolerance by "
+                   "the total pore volume of the reservoir.");
+        Parameters::registerParam<TypeTag, Properties::EclNewtonRelaxedTolerance>
+                   ("The maximum error which the volumetric residual "
+                     "may exhibit if it is in a 'relaxed' region during a strict iteration.");
     }
 
     /*!
