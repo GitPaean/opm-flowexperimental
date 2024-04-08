@@ -200,7 +200,7 @@ public:
         OPM_TIMEBLOCK(problemWriteOutput);
         // use the generic code to prepare the output fields and to
         // write the desired VTK files.
-        if (EWOMS_GET_PARAM(TypeTag, bool, EnableWriteAllSolutions) || this->simulator().episodeWillBeOver()){
+        if (Parameters::get<TypeTag, Properties::EnableWriteAllSolutions>() || this->simulator().episodeWillBeOver()){
             BaseType::writeOutput(verbose);
         }
     }
@@ -210,31 +210,31 @@ public:
         ParentType::registerParameters();
 
         BlackoilModelParameters<TypeTag>::registerParameters();
-        // EWOMS_REGISTER_PARAM(TypeTag, bool, EnableTerminalOutput, "Do *NOT* use!");
-        Parameters::hideParam<TypeTag>("DbhpMaxRel");
-        Parameters::hideParam<TypeTag>("DwellFractionMax");
-        Parameters::hideParam<TypeTag>("MaxResidualAllowed");
-        Parameters::hideParam<TypeTag>("ToleranceMb");
-        Parameters::hideParam<TypeTag>("ToleranceMbRelaxed");
-        Parameters::hideParam<TypeTag>("ToleranceCnv");
-        Parameters::hideParam<TypeTag>("ToleranceCnvRelaxed");
-        Parameters::hideParam<TypeTag>("ToleranceWells");
-        Parameters::hideParam<TypeTag>("ToleranceWellControl");
-        Parameters::hideParam<TypeTag>("MaxWelleqIter");
-        Parameters::hideParam<TypeTag>("UseMultisegmentWell");
-        Parameters::hideParam<TypeTag>("TolerancePressureMsWells");
-        Parameters::hideParam<TypeTag>("MaxPressureChangeMsWells");
-        Parameters::hideParam<TypeTag>("MaxInnerIterMsWells");
-        Parameters::hideParam<TypeTag>("MaxNewtonIterationsWithInnerWellIterations");
-        Parameters::hideParam<TypeTag>("MaxInnerIterWells");
-        Parameters::hideParam<TypeTag>("MaxSinglePrecisionDays");
-        Parameters::hideParam<TypeTag>("MinStrictCnvIter");
-        Parameters::hideParam<TypeTag>("MinStrictMbIter");
-        Parameters::hideParam<TypeTag>("SolveWelleqInitially");
-        Parameters::hideParam<TypeTag>("UpdateEquationsScaling");
-        Parameters::hideParam<TypeTag>("UseUpdateStabilization");
-        Parameters::hideParam<TypeTag>("MatrixAddWellContributions");
-        // Parameters::hideParam<TypeTag>("EnableTerminalOutput");
+        // Parameters::registerParam<TypeTag, Properties::EnableTerminalOutput>("Do *NOT* use!");
+        Parameters::hideParam<TypeTag, Properties::DbhpMaxRel>();
+        Parameters::hideParam<TypeTag, Properties::DwellFractionMax>();
+        Parameters::hideParam<TypeTag, Properties::MaxResidualAllowed>();
+        Parameters::hideParam<TypeTag, Properties::ToleranceMb>();
+        Parameters::hideParam<TypeTag, Properties::ToleranceMbRelaxed>();
+        Parameters::hideParam<TypeTag, Properties::ToleranceCnv>();
+        Parameters::hideParam<TypeTag, Properties::ToleranceCnvRelaxed>();
+        Parameters::hideParam<TypeTag, Properties::ToleranceWells>();
+        Parameters::hideParam<TypeTag, Properties::ToleranceWellControl>();
+        Parameters::hideParam<TypeTag, Properties::MaxWelleqIter>();
+        Parameters::hideParam<TypeTag, Properties::UseMultisegmentWell>();
+        Parameters::hideParam<TypeTag, Properties::TolerancePressureMsWells>();
+        Parameters::hideParam<TypeTag, Properties::MaxPressureChangeMsWells>();
+        Parameters::hideParam<TypeTag, Properties::MaxInnerIterMsWells>();
+        Parameters::hideParam<TypeTag, Properties::MaxNewtonIterationsWithInnerWellIterations>();
+        Parameters::hideParam<TypeTag, Properties::MaxInnerIterWells>();
+        Parameters::hideParam<TypeTag, Properties::MaxSinglePrecisionDays>();
+        Parameters::hideParam<TypeTag, Properties::MinStrictCnvIter>();
+        Parameters::hideParam<TypeTag, Properties::MinStrictMbIter>();
+        Parameters::hideParam<TypeTag, Properties::SolveWelleqInitially>();
+        Parameters::hideParam<TypeTag, Properties::UpdateEquationsScaling>();
+        Parameters::hideParam<TypeTag, Properties::UseUpdateStabilization>();
+        Parameters::hideParam<TypeTag, Properties::MatrixAddWellContributions>();
+        // Parameters::hideParam<TypeTag, Properties::EnableTerminalOutput>();
     }
 
     // inherit the constructors

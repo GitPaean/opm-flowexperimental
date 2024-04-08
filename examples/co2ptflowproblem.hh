@@ -25,8 +25,8 @@
  *
  * \copydoc Opm::co2ptflashproblem
  */
-#ifndef OPM_CO2PTFLASH_PROBLEM_2_HH
-#define OPM_CO2PTFLASH_PROBLEM_2_HH
+#ifndef OPM_CO2PTFLOW_PROBLEM_2_HH
+#define OPM_CO2PTFlOW_PROBLEM_2_HH
 
 #include <opm/common/Exceptions.hpp>
 
@@ -35,7 +35,7 @@
 #include <opm/material/components/C1.hpp>
 #include <opm/material/fluidmatrixinteractions/RegularizedBrooksCorey.hpp>
 #include <opm/material/fluidmatrixinteractions/BrooksCorey.hpp>
-#include <opm/material/constraintsolvers/PTFlash.hpp>
+#include <opm/material/constraintsolvers/PTFlash.hpp> 
 #include <opm/material/fluidsystems/GenericOilGasFluidSystem.hpp>
 #include <opm/material/common/Valgrind.hpp>
 #include <opm/models/immiscible/immisciblemodel.hh>
@@ -76,10 +76,6 @@ struct EpisodeLength { using type = UndefinedProperty;};
 
 template <class TypeTag, class MyTypeTag>
 struct Initialpressure { using type = UndefinedProperty;};
-
-// template <class TypeTag, class MyTypeTag>
-// struct ProdCell { using type = UndefinedProperty;};
-
 
 template <class TypeTag, class MyTypeTag>
 struct NumComp { using type = UndefinedProperty; };
@@ -206,8 +202,7 @@ struct NewtonTolerance<TypeTag, TTag::CO2PTBaseProblem> {
 
 template <class TypeTag>
 struct NewtonMaxIterations<TypeTag, TTag::CO2PTBaseProblem> {
-    using type = GetPropType<TypeTag, Scalar>;
-    static constexpr type value = 30;
+    static constexpr int value = 30;
 };
 
 template <class TypeTag>
@@ -288,12 +283,12 @@ struct DomainSizeZ<TypeTag, TTag::CO2PTBaseProblem> {
 };
 
 template<class TypeTag>
-struct CellsX<TypeTag, TTag::CO2PTBaseProblem> { static constexpr int value = 30; };
+struct CellsX<TypeTag, TTag::CO2PTBaseProblem> { static constexpr unsigned value = 30; };
 template<class TypeTag>
-struct CellsY<TypeTag, TTag::CO2PTBaseProblem> { static constexpr int value = 1; };
+struct CellsY<TypeTag, TTag::CO2PTBaseProblem> { static constexpr unsigned value = 1; };
 // CellsZ is not needed, while to keep structuredgridvanguard.hh compile
 template<class TypeTag>
-struct CellsZ<TypeTag, TTag::CO2PTBaseProblem> { static constexpr int value = 1; };
+struct CellsZ<TypeTag, TTag::CO2PTBaseProblem> { static constexpr unsigned value = 1; };
 
 template <class TypeTag>
 struct EnableEnergy<TypeTag, TTag::CO2PTBaseProblem> {
@@ -330,7 +325,7 @@ class CO2PTProblem : public GetPropType<TypeTag, Properties::BaseProblem>
     using MaterialLaw = GetPropType<TypeTag, Properties::MaterialLaw>;
     using Simulator = GetPropType<TypeTag, Properties::Simulator>;
     using Model = GetPropType<TypeTag, Properties::Model>;
-    using MaterialLawParams = GetPropType<TypeTag, Properties::MaterialLawParams>;
+    using MaterialLawParams = GetPropType<TypeTag, Properties::MaterialLawParams>;    
 
     using Toolbox = Opm::MathToolbox<Evaluation>;
     using CoordScalar = typename GridView::ctype;
@@ -358,7 +353,7 @@ public:
     explicit CO2PTProblem(Simulator& simulator)
         : ParentType(simulator)
     {
-        const Scalar epi_len = EWOMS_GET_PARAM(TypeTag, Scalar, EpisodeLength);
+        const Scalar epi_len = Parameters::get<TypeTag, Properties::EpisodeLength>();
         simulator.setEpisodeLength(epi_len);
         FluidSystem::init();
         using CompParm = typename FluidSystem::ComponentParam;
@@ -376,7 +371,7 @@ public:
 
     void initPetrophysics()
     {
-        temperature_ = EWOMS_GET_PARAM(TypeTag, Scalar, Temperature);
+        temperature_ = Parameters::get<TypeTag, Properties::Temperature>();
         K_ = this->toDimMatrix_(9.869232667160131e-14);
 
         porosity_ = 0.1;
@@ -410,14 +405,15 @@ public:
     static void registerParameters()
     {
         ParentType::registerParameters();
+
         Parameters::registerParam<TypeTag, Properties::Temperature>
-               ("The temperature [K] in the reservoir");
+            ("The temperature [K] in the reservoir");
         Parameters::registerParam<TypeTag, Properties::Initialpressure>
-               ("The initial pressure [Pa s] in the reservoir");
+            ("The initial pressure [Pa s] in the reservoir");
         Parameters::registerParam<TypeTag, Properties::SimulationName>
-               ("The name of the simulation used for the output files");
+            ("The name of the simulation used for the output files");
         Parameters::registerParam<TypeTag, Properties::EpisodeLength>
-               ("Time interval [s] for episode length");
+            ("Time interval [s] for episode length");
     }
 
     /*!
@@ -426,7 +422,7 @@ public:
     std::string name() const
     {
         std::ostringstream oss;
-        oss << EWOMS_GET_PARAM(TypeTag, std::string, SimulationName);
+        oss << Parameters::get<TypeTag, Properties::SimulationName>();
         return oss.str();
     }
 
@@ -435,7 +431,7 @@ public:
     // the old one.
     void endEpisode()
     {
-        Scalar epi_len = EWOMS_GET_PARAM(TypeTag, Scalar, EpisodeLength);
+        Scalar epi_len = Parameters::get<TypeTag, Properties::EpisodeLength>();
         this->simulator().startNextEpisode(epi_len);
     }
 
@@ -511,7 +507,7 @@ public:
     {
         int spatialIdx = context.globalSpaceIndex(spaceIdx, timeIdx);
         int inj = 0;
-        int prod = EWOMS_GET_PARAM(TypeTag, int, ProdCell) - 1;
+        int prod = Parameters::get<TypeTag, Properties::CellsX>() - 1;
         if (spatialIdx == inj || spatialIdx == prod) {
             return 1.0;
         } else {
@@ -562,7 +558,7 @@ private:
         // p0 = 75e5
         // T0 = 423.25
         int inj = 0;
-        int prod = EWOMS_GET_PARAM(TypeTag, int, ProdCell) - 1;
+        int prod = Parameters::get<TypeTag, Properties::CellsX>() - 1;
         int spatialIdx = context.globalSpaceIndex(spaceIdx, timeIdx);
         ComponentVector comp;
         comp[0] = Evaluation::createVariable(0.5, 1);
@@ -577,7 +573,7 @@ private:
         sat[0] = 1.0;
         sat[1] = 1.0 - sat[0];
 
-        Scalar p0 = EWOMS_GET_PARAM(TypeTag, Scalar, Initialpressure);
+        Scalar p0 = Parameters::get<TypeTag, Properties::Initialpressure>();
 
         //\Note, for an AD variable, if we multiply it with 2, the derivative will also be scalced with 2,
         //\Note, so we should not do it.
